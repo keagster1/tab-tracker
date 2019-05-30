@@ -12,7 +12,7 @@ import VueYotuubeEmbed from 'vue-youtube-embed'
 Vue.config.productionTip = false
 
 Vue.use(Vuetify)
-Vue.use(VueYotuubeEmbed, {global: true})
+Vue.use(VueYotuubeEmbed)
 
 sync(store, router)
 

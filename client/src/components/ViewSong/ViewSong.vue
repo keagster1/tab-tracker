@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout>
-      <v-flex xs6>
+      <v-flex xs6 class="mb-2">
         <!-- Name, artist, genre, album -->
         <song-information :song="song"/>
       </v-flex>
