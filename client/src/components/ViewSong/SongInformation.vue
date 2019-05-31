@@ -10,12 +10,7 @@
           class="cyan"
           @click="navigateTo({name: 'song-edit', params: {songId: song.id}})"
         >Edit</v-btn>
-        <v-btn
-          dark
-          class="cyan"
-          v-if="isUserLoggedIn && !bookmark"
-          @click="setAsBookmark"
-        >Bookmark</v-btn>
+        <v-btn dark class="cyan" v-if="isUserLoggedIn && !bookmark" @click="setAsBookmark">Bookmark</v-btn>
         <v-btn
           dark
           class="cyan"
@@ -45,17 +40,18 @@ export default {
   computed: {
     ...mapState(["isUserLoggedIn"])
   },
-  async mounted() {
-    try {
-      this.bookmark = (await BookmarksService.index({
-        songId: this.$store.state.route.params.songId,
-        userId: this.$store.state.user.id
-      })).data;
-    } catch (error) {
-      console.log(error)      
-      this.bookmark = null
+  watch: {
+    async song() {
+      try {
+        this.bookmark = (await BookmarksService.index({
+          songId: this.$store.state.route.params.songId,
+          userId: this.$store.state.user.id
+        })).data;
+      } catch (error) {
+        console.log(error);
+        this.bookmark = null;
+      }
     }
-
   },
   methods: {
     navigateTo(route) {
@@ -63,7 +59,7 @@ export default {
     },
     async setAsBookmark() {
       if (!this.isUserLoggedIn) {
-        return
+        return;
       }
       try {
         this.bookmark = (await BookmarksService.post({
@@ -72,13 +68,13 @@ export default {
         })).data;
       } catch (error) {
         console.log(error);
-        this.bookmark = null
+        this.bookmark = null;
       }
     },
     async removeBookmark() {
       try {
         await BookmarksService.delete(this.bookmark.id);
-        this.bookmark = null
+        this.bookmark = null;
       } catch (error) {
         console.log(error);
       }
