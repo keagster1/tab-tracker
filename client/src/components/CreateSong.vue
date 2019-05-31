@@ -29,13 +29,9 @@
 </template>
 
 <script>
-import Panel from "./Panel.vue";
 import SongService from "../services/SongsService";
 import SongsService from "../services/SongsService";
 export default {
-  components: {
-    Panel
-  },
   data() {
     return {
       song: {

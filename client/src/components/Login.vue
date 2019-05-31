@@ -7,7 +7,7 @@
           <br>
           <v-text-field name="password" type="Password" label="password" v-model="password"></v-text-field>
           <br>
-          <div class="error" v-html="error"></div>
+          <div class="danger-alert" v-html="error"></div>
           <v-btn class="cyan" dark @click="login">Login</v-btn>
         </form>
       </Panel>
@@ -18,7 +18,6 @@
 <script>
 
 import AuthenticationService from "@/services/AuthenticationService";
-import Panel from "./Panel.vue";
 
 export default {
   data() {
@@ -28,18 +27,16 @@ export default {
       error: null
     };
   },
-  components: {
-    Panel
-  },
   methods: {
     async login() {
       try {
-        const response = await AuthenticationService.login({
+        const response = (await AuthenticationService.login({
           email: this.email,
           password: this.password
-        });
-        this.$store.dispatch("setToken", response.data.token);
-        this.$store.dispatch("setUser", response.data.token);
+        })).data;
+        this.$store.dispatch("setToken", response.token);
+        this.$store.dispatch("setUser", response.user);
+        this.$router.push({name: 'songs'})
       } catch (error) {
         this.error = error.response.data.error;
         console.log(this.error);
@@ -50,7 +47,7 @@ export default {
 </script>
 
 <style>
-.error {
+.red {
   color: red;
 }
 </style>

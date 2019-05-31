@@ -13,7 +13,7 @@
             v-model="password"
           ></v-text-field>
           <br>
-          <div class="error" v-html="error"></div>
+          <div class="danger-alert" v-html="error"></div>
           <v-btn class="cyan" dark @click="register">Register</v-btn>
         </form>
       </Panel>
@@ -23,7 +23,6 @@
 
 <script>
 import AuthenticationService from "@/services/AuthenticationService";
-import Panel from "./Panel.vue";
 export default {
   data() {
     return {
@@ -31,9 +30,6 @@ export default {
       password: "",
       error: null
     };
-  },
-  components: {
-    Panel
   },
   methods: {
     async register() {
@@ -44,6 +40,7 @@ export default {
         });
         this.$store.dispatch("setToken", response.data.token);
         this.$store.dispatch("setUser", response.data.token);
+        this.$router.push({name: 'songs'})
       } catch (error) {
         this.error = error.response.data.error;
         console.log(this.error);
@@ -54,7 +51,7 @@ export default {
 </script>
 
 <style>
-.error {
+.danger-alert {
   color: red;
 }
 </style>

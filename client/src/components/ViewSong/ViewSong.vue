@@ -25,14 +25,12 @@
 
 <script>
 import SongsService from "@/services/SongsService";
-import Panel from "@/components/Panel";
 import SongInformation from "@/components/ViewSong/SongInformation";
 import YoutubeVideo from "@/components/ViewSong/YoutubeVideo";
 import Lyrics from "@/components/ViewSong/Lyrics";
 import Tab from "@/components/ViewSong/Tab";
 export default {
   components: {
-    Panel,
     SongInformation,
     YoutubeVideo,
     Lyrics,

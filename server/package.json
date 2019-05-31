@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --watch src --exec npm run server",
-    "server": "node src/app.js",
-    "lint": "eslint **/*.js"
+    "lint": "eslint **/*.js",
+    "seed": "node ./seed",
+    "server": "node src/app.js"
   },
   "keywords": [],
   "author": "",
