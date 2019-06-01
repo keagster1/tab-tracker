@@ -8,6 +8,7 @@
         <v-btn
           dark
           class="cyan"
+          v-if="isUserLoggedIn"
           @click="navigateTo({name: 'song-edit', params: {songId: song.id}})"
         >Edit</v-btn>
         <v-btn dark class="cyan" v-if="isUserLoggedIn && !bookmark" @click="setAsBookmark">Bookmark</v-btn>
@@ -38,15 +39,18 @@ export default {
   },
   props: ["song"],
   computed: {
-    ...mapState(["isUserLoggedIn"])
+    ...mapState(["isUserLoggedIn", "user"])
   },
   watch: {
     async song() {
       try {
-        this.bookmark = (await BookmarksService.index({
+        const bookmarks = (await BookmarksService.index({
           songId: this.$store.state.route.params.songId,
-          userId: this.$store.state.user.id
         })).data;
+        
+        if (bookmarks.length) {
+          this.bookmark = bookmarks[0]
+        }
       } catch (error) {
         console.log(error);
         this.bookmark = null;
@@ -62,10 +66,11 @@ export default {
         return;
       }
       try {
-        this.bookmark = (await BookmarksService.post({
+        const bookmark = (await BookmarksService.post({
           songId: this.$store.state.route.params.songId,
-          userId: this.$store.state.user.id
         })).data;
+
+        this.bookmark = bookmark
       } catch (error) {
         console.log(error);
         this.bookmark = null;
@@ -73,6 +78,7 @@ export default {
     },
     async removeBookmark() {
       try {
+        console.log(this.bookmark)
         await BookmarksService.delete(this.bookmark.id);
         this.bookmark = null;
       } catch (error) {
