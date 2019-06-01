@@ -18,7 +18,8 @@ module.exports = {
                 where: where,
                 include: [
                     {
-                        model: Song
+                        model: Song,
+                        required: true
                     }
                 ]
             })

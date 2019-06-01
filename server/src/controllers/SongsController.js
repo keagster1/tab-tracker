@@ -64,5 +64,26 @@ module.exports = {
                 error: 'An error has occurred when getting songs.'
             })
         }
+    },
+    async delete(req, res) {
+        try {
+            const { songId } = req.params
+            const song = await Song.findOne({
+                where: {
+                    id: songId,
+                }
+            })
+            if (!song) {
+                return res.status(403).send({
+                    error: "You don't have access to this song"
+                })
+            }
+            await song.destroy()
+            res.send(song)
+        } catch (error) {
+            res.status(500).send({
+                error: 'An error has occurred when deleting song.'
+            })
+        }
     }
 }

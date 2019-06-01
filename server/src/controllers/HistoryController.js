@@ -14,7 +14,8 @@ module.exports = {
                 },
                 include: [
                     {
-                        model: Song
+                        model: Song,
+                        required: true
                     }
                 ]
             })

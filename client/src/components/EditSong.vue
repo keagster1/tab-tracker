@@ -56,12 +56,12 @@
       </Panel>
       <div class="danger-alert" v-if="error">{{error}}</div>
       <v-btn dark class="cyan" @click="save">Save Song</v-btn>
+      <v-btn dark class="cyan" @click="deleteSong">Delete Song</v-btn>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import SongService from "../services/SongsService";
 import SongsService from "../services/SongsService";
 export default {
   data() {
@@ -109,9 +109,18 @@ export default {
           }
         });
       } catch (error) {
-        res.status(400).send({
-          error: "an error has occured trying to update the song."
-        });
+        console.log(error)
+      }
+    },
+    async deleteSong() {
+      // Make call to api to delete this song with songid
+      try {
+        await SongsService.delete(this.$store.state.route.params.songId)
+        this.$router.push({
+          name: 'songs'
+        })
+      } catch (error) {
+          console.log("An error occured trying to delete this song.")
       }
     }
   }
