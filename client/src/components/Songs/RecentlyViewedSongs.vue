@@ -2,8 +2,9 @@
   <Panel title="Recently Viewed Songs">
     <v-data-table :headers="headers" :pagination.sync="pagination" :items="songs">
       <template slot="items" slot-scope="props">
-        <td class="text-xs-right">{{props.item.title}}</td>
-        <td class="text-xs-right">{{props.item.artist}}</td>
+        <td class="text-xs-left">{{props.item.title}}</td>
+        <td class="text-xs-left">{{props.item.artist}}</td>
+        <td class="text-xs-left"><v-btn class="cyan" dark @click="navigateTo({name: 'song', params: {songId: props.item.SongId}})">View</v-btn></td>
       </template>
     </v-data-table>
   </Panel>
@@ -23,6 +24,10 @@ export default {
         {
           text: "Artist",
           value: "artist"
+        },
+        {
+          text: "View",
+          value: ""
         }
       ],
       pagination: {
@@ -31,6 +36,11 @@ export default {
       },
       songs: []
     };
+  },
+  methods: {
+    navigateTo(route) {      
+      this.$router.push(route);
+    }
   },
   computed: {
       ...mapState([

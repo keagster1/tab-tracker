@@ -6,6 +6,7 @@ import Songs from '@/components/Songs/Songs'
 import CreateSong from '@/components/CreateSong'
 import ViewSong from '@/components/ViewSong/ViewSong'
 import EditSong from '@/components/EditSong'
+import ListTest from '@/components/ListTest'
 
 Vue.use(Router)
 export default new Router({
@@ -48,6 +49,11 @@ export default new Router({
     {
       path: '*',
       redirect: 'songs'
+    },
+    {
+      path: '/test',
+      name: 'list-test',
+      component: ListTest
     }
   ]
 })
